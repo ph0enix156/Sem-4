@@ -2,73 +2,62 @@
 #include <algorithm>
 using namespace std;
 
-class avl_node
-{
+class avl_node{
 public:
     string key, meaning;
     avl_node *left, *right;
 
-    avl_node(string k, string m)
-    {
+    avl_node(string k, string m){
         key = k;
         meaning = m;
         left = right = NULL;
     }
 };
 
-class avlTree
-{
+class avlTree{
 public:
     avl_node *root;
 
-    avlTree()
-    {
+    avlTree(){
         root = NULL;
     }
 
-    int height(avl_node *node)
-    {
+    int height(avl_node *node){
         if (node == NULL)
             return 0;
 
         return max(height(node->left), height(node->right)) + 1;
     }
 
-    int diff(avl_node *node)
-    {
+    int diff(avl_node *node){
         return height(node->left) - height(node->right);
     }
 
-    avl_node *ll_rotation(avl_node *parent)
-    {
+    avl_node *ll_rotation(avl_node *parent){
         avl_node *temp = parent->left;
         parent->left = temp->right;
         temp->right = parent;
         return temp;
     }
 
-    avl_node *rr_rotation(avl_node *parent)
-    {
+    avl_node *rr_rotation(avl_node *parent){
         avl_node *temp = parent->right;
         parent->right = temp->left;
         temp->left = parent;
         return temp;
     }
 
-    avl_node *lr_rotation(avl_node *parent)
-    {
+    avl_node *lr_rotation(avl_node *parent){
         parent->left = rr_rotation(parent->left);
         return ll_rotation(parent);
     }
 
-    avl_node *rl_rotation(avl_node *parent)
-    {
+    avl_node *rl_rotation(avl_node *parent){
         parent->right = ll_rotation(parent->right);
         return rr_rotation(parent);
     }
 
-    avl_node *balance(avl_node *node)
-    {
+    avl_node *balance(avl_node *node){
         int bf = diff(node);
 
         if (bf > 1)
@@ -89,8 +78,7 @@ public:
         return node;
     }
 
-    avl_node *insert(avl_node *node, string key, string meaning)
-    {
+    avl_node *insert(avl_node *node, string key, string meaning){
         if (node == NULL)
             return new avl_node(key, meaning);
 
@@ -151,8 +139,7 @@ int main()
         cout << "1. Insert Keyword\n";
         cout << "2. Update Meaning\n";
         cout << "3. Display (All Traversals)\n";
-        cout << "4. Search Keyword\n";
-        cout << "5. Exit\n";
+        cout << "4. Exit\n";
 
         cout << "Enter choice: ";
         cin >> choice;
